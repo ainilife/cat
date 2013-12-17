@@ -36,8 +36,8 @@ public class DefaultABTestContextManager extends ContainerHolder implements ABTe
 			return new Entry();
 		}
 	};
-	
-	public ABTestCodec getABTestCodec(){
+
+	public ABTestCodec getABTestCodec() {
 		return m_cookieCodec;
 	}
 
@@ -143,11 +143,7 @@ public class DefaultABTestContextManager extends ContainerHolder implements ABTe
 
 				Map<String, String> newCookielets = ctx.getCookielets();
 
-				if (newCookielets != null && !newCookielets.isEmpty()) {
-					map.put(key, newCookielets);
-				} else {
-					map.remove(key);
-				}
+				map.put(key, newCookielets);
 			}
 
 			String newValue = m_cookieCodec.encode(map);

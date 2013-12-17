@@ -41,6 +41,7 @@ public class DefaultABTestContext implements ABTestContext {
 	}
 
 	public Map<String, String> getCookielets() {
+
 		return m_cookielets;
 	}
 
@@ -125,25 +126,29 @@ public class DefaultABTestContext implements ABTestContext {
 		m_response = response;
 		m_cookielets = cookielets;
 
-		Invocable inv = m_entity.getInvocable();
+		if (m_cookielets != null) {
+			m_groupName = m_cookielets.get("ab");
+		}else{
+			Invocable inv = m_entity.getInvocable();
 
-		if (inv != null && m_entity.isEligible(new Date())) {
-			boolean isAccept = false;
-			Transaction t = Cat.newTransaction("ABTest-GroupStrategy", m_entity.getGroupStrategyName());
+			if (inv != null && m_entity.isEligible(new Date())) {
+				boolean isAccept = false;
+				Transaction t = Cat.newTransaction("ABTest-GroupStrategy", m_entity.getGroupStrategyName());
 
-			try {
-				isAccept = (Boolean) inv.invokeFunction("isEligible", request);
+				try {
+					isAccept = (Boolean) inv.invokeFunction("isEligible", request);
 
-				if (isAccept) {
-					m_entity.apply(this);
+					if (isAccept) {
+						m_entity.apply(this);
+					}
+
+					t.setStatus(Message.SUCCESS);
+				} catch (Throwable e) {
+					t.setStatus(e);
+					Cat.logError(e);
+				} finally {
+					t.complete();
 				}
-
-				t.setStatus(Message.SUCCESS);
-			} catch (Throwable e) {
-				t.setStatus(e);
-				Cat.logError(e);
-			} finally {
-				t.complete();
 			}
 		}
 
