@@ -22,7 +22,7 @@ public class TrafficDistributionGroupStrategy implements ABTestGroupStrategy {
 	private int m_scoreA = 0;
 
 	@Override
-	public void apply(ABTestContext ctx) {
+	public synchronized void apply(ABTestContext ctx) {
 		m_scoreControl += m_percentControl;
 		m_scoreA += m_percentA;
 
@@ -36,7 +36,7 @@ public class TrafficDistributionGroupStrategy implements ABTestGroupStrategy {
 	}
 
 	@Override
-	public void init() {
+	public synchronized void init() {
 		if ((m_percentA + m_percentControl) > 100) {
 			m_percentControl = 50;
 			m_percentA = 50;

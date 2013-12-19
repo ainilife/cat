@@ -6,7 +6,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -62,8 +61,7 @@ public class ABTestContextTest extends ComponentTestCase {
 	private void test(int requestNum, String expectedMetric) {
 		for (int i = 0; i < requestNum; i++) {
 			MockHttpServletRequest request = new MockHttpServletRequest("http://localhost:8081/cat");
-			Map<String, String> cookielets = new HashMap<String, String>();
-			m_context.setup(request, null, cookielets);
+			m_context.setup(request, null, null);
 		}
 
 		String actual = m_contextManager.getABTestCodec().encode("100", m_context.getCookielets());
