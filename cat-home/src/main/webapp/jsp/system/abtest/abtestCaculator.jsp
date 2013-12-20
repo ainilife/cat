@@ -11,18 +11,10 @@
 	type="com.dianping.cat.system.page.abtest.Payload" scope="request" />
 <jsp:useBean id="model" type="com.dianping.cat.system.page.abtest.Model"
 	scope="request" />
-
-<style>
-#content {
-	width: 100%;
-	margin: 0 auto;
-}
-
-div.controls input {
-	height: 30px;
-}
-</style>
+	
 <a:body>
+	<res:useCss value="${res.css.local['abtest.css']}" target="head-css" />
+	
 	<div id="content" class="row-fluid">
 		<div class="span12 column">
 			<h3>A/B Test Caculator</h3>

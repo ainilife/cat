@@ -12,16 +12,8 @@
 <jsp:useBean id="model" type="com.dianping.cat.system.page.abtest.Model"
 	scope="request" />
 
-<style>
-#content {
-	width: 100%;
-	margin: 0 auto;
-}
-canvas{}
-
-</style>
-
 <a:body>
+<res:useCss value="${res.css.local['abtest.css']}" target="head-css" />
 <res:useCss value="${res.css.local['bootstrap-datetimepicker.min.css']}" target="head-css" />
 <res:useJs value="${res.js.local['bootstrap-datetimepicker.min.js']}" target="head-js" />
 <res:useJs value="${res.js.local['Chart.min.js']}" target="head-js" />

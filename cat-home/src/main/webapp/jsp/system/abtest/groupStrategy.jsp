@@ -4,13 +4,12 @@
 	<div id="groupStrategyModal" class="modal hide fade" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"
-				aria-hidden="true">×</button>
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			<div id="header1">
-				<strong>Step 1</strong>请粘贴分组策略代码
+				<strong>第一步 </strong>请粘贴分组策略代码
 			</div>
 			<div class="hide" id="header2">
-				<strong>Step 2</strong>设置类型
+				<strong>第二步 </strong>设置类型
 			</div>
 		</div>
 		<div class="modal-body" id="groupStrategyDiv1" style="height:360px;" >
@@ -18,32 +17,29 @@
 			<div class="control-group" style="margin-top: 0px;">
 				<label class="control-label" style="width: 50px;"> </label>
 				<div class="controls" style="margin-left: 5px;">
-					<textarea id="srcCode" name="srcCode" placeholder="please paste source code here..."
+					<textarea id="srcCode" name="srcCode" placeholder="请在此粘贴自定义的分组策略的代码..."
 						class="span7" rows="16" cols="80"></textarea>
 				</div>
 			</div>
 		</div>
 		<div class="modal-body" style="display:none;height:360px;" id="groupStrategyDiv2">
 			<div class="control-group">
-				<label class="control-label">Name <i tips=""
-					data-trigger="hover" class="icon-question-sign"
+				<label class="control-label">名字 <i tips="" data-trigger="hover" class="icon-question-sign"
 					data-toggle="popover" data-placement="top"
-					data-original-title="tips"
-					data-content="Only charactor, number and underline are allowed. e.g. CatWeb_1"></i>
+					data-original-title="提示" data-content="只支持字母，数字和下划线的名字，例如：WebShop_2"></i>
 				</label>
 				<div class="controls">
-					<input type="text" name="name" placeholder="give it a name ..." id="groupStrategyName"
-						check-type="required" required-message="Name is required!">
+					<input type="text" name="name" id="groupStrategyName" check-type="required" required-message="请输入分组策略的名字">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">Class </label>
+				<label class="control-label">类名 </label>
 				<div class="controls">
 					<input type="text" name="className"  readonly="readonly">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">FullName </label>
+				<label class="control-label">全名 </label>
 				<div class="controls">
 					<input type="text" name="fullyQualifiedName"  readonly="readonly">
 				</div>
@@ -53,9 +49,9 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-			<button class="btn btn-primary" id="submitGroupStrategy">Next</button>
-			<button class="btn btn-primary" id="submitGroupStrategyOK" aria-hidden="true" disabled="true">OK</button>
+			<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+			<button class="btn btn-primary" id="submitGroupStrategy">下一步</button>
+			<button class="btn btn-primary" id="submitGroupStrategyOK" aria-hidden="true" disabled="true">确定</button>
 		</div>
 	</div>
 </form>
@@ -63,11 +59,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#submitGroupStrategy").click(function(e) {
-		//e.preventDefault();
-
-		if($('#submitGroupStrategy').text() == 'Next'){
-			if($('#srcCode').val() == ""){
-				var innerHTML = '<div class="alert  alert-error" style="margin-bottom: 5px;"><button type="button" class="close" data-dismiss="alert">&times;</button><span>Please input src code...</span></div>';
+		if($('#submitGroupStrategy').text() == '下一步'){
+			if($('#srcCode').val().length == 0){
+				var innerHTML = '<div class="alert  alert-error" style="margin-bottom: 5px;"><button type="button" class="close" data-dismiss="alert">&times;</button><span>请粘贴自定义的分组策略的代码...</span></div>';
 				$('#alertErrorDiv').html(innerHTML);
 			}else{
 				var params = $("#groupStrategyFrom").serialize();
@@ -111,7 +105,7 @@ $(document).ready(function() {
 						$('#groupStrategyDiv2sub').empty();
 						$('#groupStrategyDiv2sub').html(innerHTML);
 						
-						$('#submitGroupStrategy').text("Prev");
+						$('#submitGroupStrategy').text("上一步");
 						$('#submitGroupStrategyOK').removeAttr("disabled");
 						
 						$('#header2').show();
@@ -128,7 +122,7 @@ $(document).ready(function() {
 		}else{
 			$('#header1').show();
 			$('#groupStrategyDiv1').show();
-			$('#submitGroupStrategy').text("Next");
+			$('#submitGroupStrategy').text("下一步");
 			$('#header2').hide();
 			$('#groupStrategyDiv2').hide();
 		}

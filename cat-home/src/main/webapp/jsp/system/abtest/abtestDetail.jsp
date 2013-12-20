@@ -6,36 +6,26 @@
 <jsp:useBean id="ctx" type="com.dianping.cat.system.page.abtest.Context" scope="request" />
 <jsp:useBean id="payload" type="com.dianping.cat.system.page.abtest.Payload" scope="request" />
 <jsp:useBean id="model" type="com.dianping.cat.system.page.abtest.Model" scope="request" />
+
 <style>
-#content {
-	width: 100%;
-	margin: 0 auto;
-}
-
-div.controls input {
-	height: 30px;
-}
-
 #form input[disabled],#form  select[disabled],#form  textarea[disabled],#form  input[readonly],#form  select[readonly],#form  textarea[readonly]
 	{
 	background-color: #F7F7F9;
 	cursor: text;
 }
-
-.inline-space{
-	margin-bottom: 5px;
-}
-
 </style>
+
 <a:body>
-   <res:useCss value="${res.css.local['bootstrap-datetimepicker.min.css']}" target="head-css" />
-   <res:useCss value="${res.css.local['select2.css']}" target="head-css" />
-   <res:useCss value="${res.css.local['slider.css']}" target="head-css" />
-   <res:useJs value="${res.js.local['bootstrap-datetimepicker.min.js']}" target="head-js" />
-   <res:useJs value="${res.js.local['select2.min.js']}" target="head-js" />
-   <res:useJs value="${res.js.local['abtestAllTest.js']}" target="head-js" />
-   <res:useJs value="${res.js.local['bootstrap-validation.min.js']}" target="head-js" />
-   <res:useJs value="${res.js.local['bootstrap-slider.js']}" target="head-js" />
+	<res:useCss value="${res.css.local['abtest.css']}" target="head-css" />
+    <res:useCss value="${res.css.local['bootstrap-datetimepicker.min.css']}" target="head-css" />
+    <res:useCss value="${res.css.local['select2.css']}" target="head-css" />
+    <res:useCss value="${res.css.local['slider.css']}" target="head-css" />
+    <res:useJs value="${res.js.local['bootstrap-datetimepicker.min.js']}" target="head-js" />
+    <res:useJs value="${res.js.local['select2.min.js']}" target="head-js" />
+    <res:useJs value="${res.js.local['abtestAllTest.js']}" target="head-js" />
+    <res:useJs value="${res.js.local['bootstrap-validation.min.js']}" target="head-js" />
+    <res:useJs value="${res.js.local['bootstrap-slider.js']}" target="head-js" />
+    
    <div id="content" class="row-fluid">
       <div class="span12 column">
          <h3>
@@ -43,9 +33,6 @@ div.controls input {
          </h3>
          <ul class="nav nav-tabs">
             <li><a href="?op=report&id=${payload.id }"> <img  class="img-polaroid"  style="vertical-align: text-bottom;" height="15" width="15"
-    <%--               src="${res.img.local['star_black_small.png']}"> Summary
-            </a></li>
-            <li><a href="#detail"> <img  class="img-polaroid"  style="vertical-align: text-bottom;" height="15" width="15" --%>
                   src="${res.img.local['details_black_small.png']}"> Detail Report
             </a></li>
             <li class="active"><a href="?op=detail&id=${payload.id }"> <img  class="img-polaroid"  style="vertical-align: text-bottom;"
@@ -55,14 +42,14 @@ div.controls input {
       </div>
    </div>
 
-   <div style="width: 950px; margin: 0 auto; margin-bottom: 250px;">
+   <div class="container">
       <div id="alertDiv" style="margin-left: 170px; margin-top:5px;padding: 0; width: 300px;"></div>
-      <div style="width: 90%;">
+      <div>
          <form id="form" method="post" action="" class="form-horizontal">
             <button id="cancel" type="button" onclick="disableEdit()" style="float: right; margin-left: 20px" class="btn hide">cancel</button>
             <button id="submit" style="float: right;" type="submit" class="btn btn-success hide">submit</button>
             <button id="edit" style="float: right;" type="button" onclick="enableEdit()" class="btn btn-info">Edit</button>
-            <h5>Basic Information</h5>
+            <h5>基本信息</h5>
             <hr style="margin-top: 20px;">
             <input type="hidden" name="id" value="${model.abtest.id}"> <input type="hidden" name="op" value="detail">
             <c:if test="${model.abtest.caseId != null}">
@@ -75,24 +62,17 @@ div.controls input {
                </div>
             </c:if>
             <div class="control-group">
-               <label class="control-label">AB Test Name <i tips="" data-trigger="hover" class="icon-question-sign"
-                  data-toggle="popover" data-placement="top" data-original-title="tips"
-                  data-content="Only charactor, number and underline are allowed. e.g. CatWeb_1.It's important, because your client's code should use this 'Name' to specify a ABTest Case"></i>
+               <label class="control-label">A/B测试名<i tips="" data-trigger="hover" class="icon-question-sign"
+                  data-toggle="popover" data-placement="top" data-original-title="提示"
+                  data-content="只支持字母，数字和下划线. 例如:CatWeb_1"></i>
                </label>
                <div class="controls">
-                  <input id="inputName" type="text" name="name" placeholder="give it a name ..." check-type="required"
-                     required-message="Name is required!" value="${model.abtest.name}" readonly="readonly">
+                  <input id="inputName" type="text" name="name" placeholder="Sample" check-type="required"
+                     required-message="请指定A/B测试名" value="${model.abtest.name}" readonly="readonly">
                </div>
             </div>
             <div class="control-group">
-               <label class="control-label">Description</label>
-               <div class="controls">
-                  <textarea readonly="readonly" name="description" placeholder="say something about the abtest ... " class="span6"
-                     rows="3" cols="60">${model.abtest.description}</textarea>
-               </div>
-            </div>
-            <div class="control-group">
-               <label class="control-label">Start Time</label>
+               <label class="control-label">开始时间</label>
                <div class="controls">
                   <div id="datetimepicker1" class="input-append date">
                      <input name="startDate" readonly="readonly" value="${w:format(model.abtest.run.startDate,'yyyy-MM-dd hh:mm')}"
@@ -104,7 +84,7 @@ div.controls input {
                </div>
             </div>
             <div class="control-group">
-               <label class="control-label">End Time</label>
+               <label class="control-label">结束时间</label>
                <div class="controls">
                   <div id="datetimepicker2" class="input-append date">
                      <input name="endDate" readonly="readonly" value="${w:format(model.abtest.run.endDate,'yyyy-MM-dd hh:mm')}"
@@ -116,9 +96,9 @@ div.controls input {
                </div>
             </div>
             <div class="control-group">
-               <label class="control-label">Domain <i tips="" data-trigger="hover" class="icon-question-sign"
-                  data-toggle="popover" data-placement="top" data-original-title="tips"
-                  data-content="you can choose one or more than one domain"></i>
+               <label class="control-label">应用名<i tips="" data-trigger="hover" class="icon-question-sign"
+                  data-toggle="popover" data-placement="top" data-original-title="提示"
+                  data-content="选择实验所在的应用名，这个应用名是Cat中的应用名"></i>
                </label>
                <div class="controls">
                   <select multiple="" name="domains" id="domains" style="width: 350px;" class="populate select2-offscreen"
@@ -133,16 +113,23 @@ div.controls input {
                   </select>
                </div>
             </div>
-            <h5>Traffic Filter</h5>
-			<hr style="margin-top: 20px;">
+            <div class="control-group">
+               <label class="control-label">描述</label>
+               <div class="controls">
+                  <textarea readonly="readonly" name="description" placeholder="say something about the abtest ... " class="span6"
+                     rows="3" cols="60">${model.abtest.description}</textarea>
+               </div>
+            </div>
+            <h5>流量过滤</h5>
+			<hr style="margin-top: 10px;">
 			<div class="control-group">
-				<label class="control-label">Test Page URL</label>
+				<label class="control-label">页面URL</label>
 				<div class="controls">
 					<input id="input1" type="url" name="1" placeholder="http://www.example.com" check-type="required" required-message="URL is required!"  class="input-xlarge" readonly="readonly">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">Test Page Pattern</label>
+				<label class="control-label">页面URL Pattern</label>
 				<div class="controls">
 					<span  id="forInput2">No Pattern specified</span>
 					<input  id="input2" type="url" name="5" placeholder="http://www.example.com/*" class="input-xlarge hide" readonly="readonly">
@@ -152,7 +139,7 @@ div.controls input {
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">Exclude URLs</label>
+				<label class="control-label">排除的URLs</label>
 				<div class="controls">
 					<span id="forInput3">No URL excluded</span>
 					<input id="input3" type="url" name="2" placeholder="http://www.example.com/1" class="input-xlarge hide" readonly="readonly">
@@ -162,7 +149,7 @@ div.controls input {
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">Traffic Segment</label>
+				<label class="control-label">细分规则</label>
 				<div class="controls">
 					<span id="input4">All visitors</span>
 					<div id="div2" class="hide">
@@ -174,7 +161,7 @@ div.controls input {
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">Traffic Included in Test</label>
+				<label class="control-label">比例</label>
 				<div class="controls">
 						<input class="slider" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="show" readonly="readonly">
 					<span class="add-on hide">&nbsp;&nbsp;</span>
@@ -186,27 +173,15 @@ div.controls input {
 				</div>
 			</div>
 			
-			<h5>Conversion Goals</h5>
-			<hr style="margin-top: 20px;">
-			<div class="control-group">
-				<label class="control-label">Convertion Goals</label>
-				<div class="controls">
-					<div id="div3">
-					
-					</div>
-					<a href="javascript:void(0)" id="addConvertionGoal" class="pull-right active"><i class="icon-plus"></i>Add another goal</a>
-				</div>
-			</div>
-			
-            <h5>Group Strategy</h5>
+            <h5>分组策略</h5>
             <hr style="margin-top: 5px;">
             <div class="control-group">
-               <label class="control-label">Strategy Name</label>
+               <label class="control-label">请指定分组策略</label>
                <div class="controls">
                   <select id="strategyId" name="strategyId" check-type="required" required-message="Strategy is required!" disabled="disabled">
                      <c:forEach var="item" items="${model.groupStrategyList}">
                      	<option value="0">请选择一个分组策略</option>
-                        <option value="${item.id }" <c:if test="${item.id == model.abtest.groupStrategy}">selected="selected"</c:if>>${item.name}</option>
+                        <option value="${item.id}" <c:if test="${item.id == model.abtest.groupStrategy}">selected="selected"</c:if>>${item.name}</option>
                      </c:forEach>
                   </select>
                </div>
@@ -378,7 +353,6 @@ div.controls input {
 						}
 					}else if(id == "edit2"){
 					}
-					
 				});
 				
 				$("#edit3,#save3,#cancel3").click(function(e){
@@ -475,16 +449,6 @@ div.controls input {
 					//alert(innerHTML);
 					$('#groupStrategyDivsub').empty();
 					$('#groupStrategyDivsub').html(innerHTML);
-					
-					for(var i in goals){
-						var goal = goals[i];
-						
-						$('#addConvertionGoal').trigger('click');
-						$('#div3 div:last input:eq(0)').val(goal["name"]);
-						$('#div3 div:last input:eq(0)').attr("readonly","readonly");
-						$('#div3 div:last input:eq(1)').val(goal["text"]);
-						$('#div3 div:last input:eq(1)').attr("readonly","readonly");
-					}
 				}
 
 				$("#form" ).on( "submit", function( event ) {

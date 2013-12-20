@@ -11,14 +11,11 @@
 <jsp:useBean id="model" type="com.dianping.cat.system.page.abtest.Model" scope="request" />
 
 <a:body>
+	<res:useCss value="${res.css.local['abtest.css']}" target="head-css" />
 	<res:useCss value="${res.css.local['bootstrap-rowlink.css']}" target="head-css" />
 	<res:useJs value="${res.js.local['bootstrap-rowlink.min.js']}" target="head-js" />
 	<res:useJs value="${res.js.local['abtestAllTest.js']}" target="head-js" />
 	<style>
-		#content {
-			width: 100%;
-			margin: 0 auto;
-		}
 		.statusSpan {
 			float: right;
 			margin-right: 0.5em;
@@ -29,56 +26,13 @@
 		.liHover>li {
 			line-height: 1.3em;
 		}
-		
-		input.search-query {
-			-webkit-border-radius: 4px;
-			-moz-border-radius: 4px;
-			border-radius: 4px;
-		}
-		
-		#search-submit {
-			position: absolute;
-			top: 6px;
-			right: 10px;
-			display: inline-block;
-			width: 14px;
-			height: 14px;
-			*margin-right: .3em;
-			line-height: 14px;
-			text-indent: -9999px;
-			vertical-align: text-top;
-			cursor: pointer;
-			background-color: transparent;
-			background-image: url("${model.webapp}/img/glyphicons-halflings.png");
-			background-position: -48px 0;
-			background-repeat: no-repeat;
-			border: 0 none;
-			opacity: 0.75;
-		}
-		
-		tr.middle>td {
-			vertical-align: middle;
-			padding-bottom: 0;
-		}
-		
-		tr.center>td {
-			text-align: center;
-		}
-		
-		tr.centerth>th {
-			text-align: center;
-		}
 	</style>
    <br>
    <div id="content" class="row-fluid clearfix">
       <div class="span2 column">
-         <form class="navbar-search" action="">
-            <input name="q" id="search" class="search-query" placeholder="Search..."> <input type="submit" value="Search"
-               id="search-submit">
-         </form>
-         <div style="margin-top: 40px;">
+         <div>
             <ul class="nav nav-list well liHover">
-               <li class="nav-header">ABTest Status</li>
+               <li class="nav-header">A/B测试状态</li>
                <li class="divider" />
                <li ${payload.status eq 'created' ? ' class="selected"' : ''}><a href="?status=created"> <img height="12"
                      width="12" src="${res.img.local['CREATED_black_small.png']}"> created <span class="badge statusSpan">${model.listViewModel.createdCount}</span>
@@ -99,10 +53,13 @@
                </a></li>
             </ul>
          </div>
-     	 <ul class="nav nav-list">
-			<li class="nav-header">Tools</li>
-			<li class=""><a href="?op=caculator">A/B Test Calculator</a></li>
-		</ul>
+         <div style="margin-top: 10px;">
+	     	 <ul class="nav nav-list well">
+				<li class="nav-header">A/B测试工具</li>
+				<li class="divider" />
+				<li class=""><a href="?op=caculator">A/B Test Calculator</a></li>
+			</ul>
+         </div>
       </div>
       <div class="span10 column">
          <c:if test="${not empty ctx.errors}">
@@ -140,13 +97,13 @@
                   <th width="1%"></th>
                   <th style="display: none;" width="8%">ID</th>
                   <th width="8%">ID</th>
-                  <th>Name</th>
-                  <th>Domain</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
-                  <th>Status</th>
-                  <th>Created By</th>
-                  <th>Created On</th>
+                  <th>测试名</th>
+                  <th>应用名</th>
+                  <th>开始时间</th>
+                  <th>结束时间</th>
+                  <th>状态</th>
+                  <th>创建者</th>
+                  <th>创建时间</th>
                </tr>
             </thead>
             <tbody>

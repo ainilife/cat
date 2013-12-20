@@ -7,23 +7,8 @@
 <jsp:useBean id="payload" type="com.dianping.cat.system.page.abtest.Payload" scope="request" />
 <jsp:useBean id="model" type="com.dianping.cat.system.page.abtest.Model" scope="request" />
 
-<style>
-	div.controls input {
-		height: 30px;
-	}
-	
-	.logic-button-selected {
-		border: 1px solid #A7A7A7;
-		box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-	}
-	
-	.inline-space{
-		margin-bottom: 5px;
-	}
-	
-</style>
-
 <a:body>
+	<res:useCss value="${res.css.local['abtest.css']}" target="head-css" />
 	<res:useCss value="${res.css.local['bootstrap-datetimepicker.min.css']}" target="head-css" />
 	<res:useCss value="${res.css.local['select2.css']}" target="head-css" />
 	<res:useCss value="${res.css.local['slider.css']}" target="head-css" />
@@ -33,42 +18,37 @@
 	<res:useJs value="${res.js.local['bootstrap-validation.min.js']}" target="head-js" />
 	<res:useJs value="${res.js.local['bootstrap-slider.js']}" target="head-js" />
 
-	<div style="width: 950px; margin: 0 auto; margin-bottom: 250px;">
-		<h4 style="margin: 0 auto;">Create ABTest</h4>
+	<div class="container">
+		<h4>创建A/B测试</h4>
 		<div id="alertDiv" style="margin-left: 170px; margin-top:5px;padding: 0; width: 300px;"></div>
-		<div style="width: 90%;">
+		<div>
 			<form id="form" method="post" action="abtest?op=create" class="form-horizontal">
-				<a href="abtest" style="float: right; margin-left: 20px" class="btn">Cancel</a>
-				<button id="submit" style="float: right;" type="submit"
-					class="btn btn-success">Submit</button>
-				<h5>Basic Information</h5>
+				<a href="abtest" style="float: right; margin-left: 20px;" class="btn">取消</a>
+				<button id="submit" style="float: right;" type="submit" class="btn btn-success">确定</button>
+				<h5>基本信息</h5>
 				<hr style="margin-top: 20px;">
 				<div class="control-group">
-					<label class="control-label">AB Test Name <i tips=""
-						data-trigger="hover" class="icon-question-sign"
-						data-toggle="popover" data-placement="top"
-						data-original-title="tips"
-						data-content="Only charactor, number and underline are allowed. e.g. CatWeb_1"></i>
+					<label class="control-label">A/B测试名<i tips="" data-trigger="hover" class="icon-question-sign"
+						data-toggle="popover" data-placement="top" data-original-title="提示"
+						data-content="只支持字母，数字和下划线. 例如:CatWeb_1"></i>
 					</label>
 					<div class="controls">
 						<input type="text" name="name" id="abName" placeholder="Sample" class="input-xlarge"
-							check-type="required" required-message="Name is required!" value="${payload.name}">
+							check-type="required" required-message="请指定A/B测试名" value="${payload.name}">
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Owner <i tips=""
-						data-trigger="hover" class="icon-question-sign"
-						data-toggle="popover" data-placement="top"
-						data-original-title="tips"
-						data-content="Only charactor, number and underline are allowed. e.g. CatWeb_1"></i>
+					<label class="control-label">提交人<i tips="" data-trigger="hover" class="icon-question-sign"
+						data-toggle="popover" data-placement="top" data-original-title="提示"
+						data-content="只支持字母，数字和下划线. 例如:CatWeb_1.业务代码中使用这个名字获取实验对象。"></i>
 					</label>
 					<div class="controls">
 						<input type="text" name="owner" id="abOwn" placeholder="John" class="input-xlarge"
-							check-type="required" required-message="Owner is required!" value="${payload.owner}">
+							check-type="required" required-message="请指定提交人" value="${payload.owner}">
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Start Time</label>
+					<label class="control-label">开始时间</label>
 					<div class="controls">
 						<div id="datetimepicker1" class="input-append date">
 							<input name="startDate" value="${payload.startDateStr}"
@@ -80,29 +60,23 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">End Time</label>
+					<label class="control-label">结束时间</label>
 					<div class="controls">
 						<div id="datetimepicker2" class="input-append date">
 							<input name="endDate" value="${payload.endDateStr}"
-								data-format="yyyy-MM-dd hh:mm"
-								type="text"></input> <span class="add-on"> <i
-								data-time-icon="icon-time" data-date-icon="icon-calendar"> </i>
-							</span>
+								data-format="yyyy-MM-dd hh:mm"type="text"></input>
+							<span class="add-on"> <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 						</div>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Domain <i tips=""
-						data-trigger="hover" class="icon-question-sign"
-						data-toggle="popover" data-placement="top"
-						data-original-title="tips"
-						data-content="you can choose one or more domains"></i>
+					<label class="control-label">应用名<i tips="" data-trigger="hover" class="icon-question-sign"
+						data-toggle="popover" data-placement="top" data-original-title="提示"
+						data-content="选择实验所在的应用名，这个应用名是Cat中的应用名"></i>
 					</label>
 					<div class="controls">
-						<select multiple="" name="domains" id="domains"
-							style="width: 350px;" class="populate select2-offscreen"
-							tabindex="-1" check-type="required"
-							required-message="Domain is required!">
+						<select multiple="" style="width:320px;" name="domains" id="domains" class="populate select2-offscreen"
+							tabindex="-1" check-type="required" required-message="Domain is required!">
 							<c:forEach var="item" items="${model.projectMap}">
 								<optgroup label="${item.key}">
 									<c:forEach var="listItem" items="${item.value}">
@@ -114,22 +88,22 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Description</label>
+					<label class="control-label">描述</label>
 					<div class="controls">
 						<textarea name="description" class="span6"
 							rows="3">${payload.description}</textarea>
 					</div>
 				</div>
-				<h5>Traffic Filter</h5>
-				<hr style="margin-top: 20px;">
+				<h5>流量过滤</h5>
+				<hr style="margin-top: 10px;">
 				<div class="control-group">
-					<label class="control-label">Test Page URL</label>
+					<label class="control-label">页面URL</label>
 					<div class="controls">
-						<input type="url" name="1" placeholder="http://www.example.com" class="input-xlarge">
+						<textarea type="url" name="1" placeholder="http://www.example.com,http://www.dianping.com" class="span6"></textarea>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Test Page Pattern</label>
+					<label class="control-label">页面URL Pattern</label>
 					<div class="controls">
 						<span>No Pattern specified</span>
 						<input type="url" name="5" placeholder="http://www.example.com/*" class="input-xlarge hide">
@@ -139,7 +113,7 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Exclude URLs</label>
+					<label class="control-label">排除的URLs</label>
 					<div class="controls">
 						<span>No URL excluded</span>
 						<input type="url" name="2" placeholder="http://www.example.com/1" class="input-xlarge hide">
@@ -149,7 +123,7 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Traffic Segment</label>
+					<label class="control-label">细分规则</label>
 					<div class="controls">
 						<span>All visitors</span>
 						<div id="div2" class="hide">
@@ -161,7 +135,7 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Traffic Included in Test</label>
+					<label class="control-label">比例</label>
 					<div class="controls">
 							<input class="slider" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="show">
 						<span class="add-on hide">&nbsp;&nbsp;</span>
@@ -173,22 +147,10 @@
 					</div>
 				</div>
 				
-				<h5>Conversion Goals</h5>
-				<hr style="margin-top: 20px;">
+				<h5>分组策略</h5>
+				<hr style="margin-top: 10px;">
 				<div class="control-group">
-					<label class="control-label">Convertion Goals</label>
-					<div class="controls">
-						<div id="div3">
-						
-						</div>
-						<a href="javascript:void(0)" id="addConvertionGoal" class="pull-right active"><i class="icon-plus"></i>Add another goal</a>
-					</div>
-				</div>
-				
-				<h5>Group Strategy</h5>
-				<hr style="margin-top: 5px;">
-				<div class="control-group">
-					<label class="control-label">Strategy Name</label>
+					<label class="control-label">请指定分组策略</label>
 					<div class="controls">
 						<select id="strategyId" name="strategyId" check-type="required"
 							required-message="Strategy is required!">
@@ -197,12 +159,10 @@
 								<option value="${item.id}">${item.name }</option>
 							</c:forEach>
 						</select> <a href="#groupStrategyModal" role="button" class="btn" id="btnGroupStrategyModel"
-							data-toggle="modal">Add</a>
+							data-toggle="modal">添加策略</a>
 					</div>
 				</div>
-				<div id="groupStrategyDivsub">
-				
-				</div>
+				<div id="groupStrategyDivsub"></div>
 			</form>
 		</div>
 	</div>
@@ -372,8 +332,7 @@
 			$('#datetimepicker2').datetimepicker();
 			//domain selector
 			$("#domains").select2({
-				placeholder : "select domains to run this ABTest",
-				allowClear : true
+				allowClear : false
 			});
 			
 			var showData = function(){

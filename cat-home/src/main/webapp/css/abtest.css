@@ -1,0 +1,25 @@
+#content {
+	width: 100%;
+	margin: 0 auto;
+}
+
+div.controls input {
+	height: 30px;
+}
+
+.inline-space {
+	margin-bottom: 5px;
+}
+
+tr.middle>td {
+	vertical-align: middle;
+	padding-bottom: 0;
+}
+
+tr.center>td {
+	text-align: center;
+}
+
+tr.centerth>th {
+	text-align: center;
+}

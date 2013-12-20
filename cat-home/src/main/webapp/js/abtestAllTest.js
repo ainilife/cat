@@ -208,27 +208,6 @@ $(document).ready(function() {
 			$('#div2 tbody tr:last').after(tr);
 		}
 	});
-	
-	var goalCounter = 1;
-	$('#addConvertionGoal').click(function(e){
-		var innerHtml = [];
-		
-		innerHtml.push('<div class="inline-block inline-space">');
-		innerHtml.push('<input placeholder="Goal ' + goalCounter + '" check-type="required" class="input-small">');
-		innerHtml.push('<span>&nbsp;triggers when visitor&nbsp;</span>');
-		innerHtml.push('<input placeholder="http://www.example.com" check-type="required" class="input-xlarge">');
-		innerHtml.push('<a class="btn btn-link"><i class="icon-remove"></i></a>');
-		innerHtml.push('</div>');
-		
-		var line = $(innerHtml.join(""));
-		$('a',line).click(function(){
-			$(this).closest("div").remove();
-		});
-		
-		$('#div3').append(line);
-		goalCounter += 1;
-	});
-
 });
 
 (function(w) {

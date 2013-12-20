@@ -240,12 +240,14 @@ public class ABTestServiceImpl implements ABTestService, Initializable, Task {
 
 	public void insertAbtest(Abtest abtest) throws DalException {
 		m_abtestDao.insert(abtest);
+		abtest = m_abtestDao.findByPK(abtest.getId(), AbtestEntity.READSET_FULL);
 		m_abtestMap.put(abtest.getId(), abtest);
 		setModified();
 	}
 
 	public void insertAbtestRun(AbtestRun run) throws DalException {
 		m_abtestRunDao.insert(run);
+		run = m_abtestRunDao.findByPK(run.getId(), AbtestRunEntity.READSET_FULL);
 		m_abtestRunMap.put(run.getId(), run);
 		setModified();
 	}
@@ -253,6 +255,7 @@ public class ABTestServiceImpl implements ABTestService, Initializable, Task {
 	@Override
 	public void insertGroupStrategy(GroupStrategy groupStrategy) throws DalException {
 		m_groupStrategyDao.insert(groupStrategy);
+		groupStrategy = m_groupStrategyDao.findByPK(groupStrategy.getId(), GroupStrategyEntity.READSET_FULL);
 		m_groupStrategyMap.put(groupStrategy.getId(), groupStrategy);
 		setModified();
 	}
@@ -323,6 +326,7 @@ public class ABTestServiceImpl implements ABTestService, Initializable, Task {
 
 	public void updateAbtestRun(AbtestRun run) throws DalException {
 		m_abtestRunDao.updateByPK(run, AbtestRunEntity.UPDATESET_ALLOWED_MODIFYPART);
+		run = m_abtestRunDao.findByPK(run.getId(), AbtestRunEntity.READSET_FULL);
 		m_abtestRunMap.put(run.getId(), run);
 		setModified();
 	}
